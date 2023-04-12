@@ -21,12 +21,12 @@ def show_filtered_image(image):
     st.image(filtered_image, use_column_width=True)
 
 # Créer une interface utilisateur avec Streamlit
-st.title("Filtre de Sobel avec OpenCV")
-uploaded_file = st.file_uploader("Choisissez une image...", type=["jpg", "jpeg", "png"])
+st.title("StendhalGPT Picture Detector")
+uploaded_file = st.file_uploader("Upload your picture here [JPG, JPEG, PNG].", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
     image = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), 1)
     show_filtered_image(image)
 else:
-    st.warning("Veuillez choisir une image à filtrer.")
+    st.warning("Choose an other picture to check.")
 
