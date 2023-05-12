@@ -70,11 +70,11 @@ if tabs == 'Accueil':
 
                 if w*h > 100:
                     cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
-                    cv2.rectangle(ela, (x, y), (x+w, y+h), (0, 255, 0), 2)
+                    cv2.rectangle(grayscale, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
             # Convertir les tableaux numpy en images PIL pour l'affichage
             image = Image.fromarray(image)
-            image_ela = Image.fromarray(image_ela)
+            image_ela = Image.fromarray(grayscale)
 
             # Afficher l'image avec les carrés dessinés
             st.image(image, caption='Image with detected regions.', use_column_width=True)
