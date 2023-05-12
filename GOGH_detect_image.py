@@ -78,7 +78,7 @@ if tabs == 'Accueil':
 
             # Afficher l'image avec les carrés dessinés
             st.image(image, caption='Image with detected regions.', use_column_width=True)
-            st.image(image_ela, caption='ELA image with detected regions.', use_column_width=True)
+            st.image(ela, caption='ELA image with detected regions.', use_column_width=True)
 elif tabs == 'Example' :
     with col5:
         st.markdown('## Problèmes typiques d\'une génération :')
