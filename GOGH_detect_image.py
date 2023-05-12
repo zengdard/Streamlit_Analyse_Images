@@ -25,31 +25,60 @@ with st.sidebar:
                                                     'padding-left': '30px'}},
                             key="1")
 # Créer une fonction pour appliquer le filtre de Sobel
-def sobel_filter(image):
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) # convertir l'image en niveau de gris
-    grad_x = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=3) # appliquer le filtre de Sobel sur l'axe X
-    grad_y = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize=3) # appliquer le filtre de Sobel sur l'axe Y
-    abs_grad_x = cv2.convertScaleAbs(grad_x)
-    abs_grad_y = cv2.convertScaleAbs(grad_y)
-    grad = cv2.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0)
-    return grad
 
-# Créer une fonction pour afficher l'image et appliquer le filtre
-def show_filtered_image(image):
-    st.image(image, caption='Image originale', use_column_width=True)
-    filtered_image = sobel_filter(image)
-    st.image(filtered_image, use_column_width=True)
 
 col5, col6 = st.columns(2)
 
 if tabs == 'Accueil':
-    uploaded_file = st.file_uploader("Choisissez une image...", type=["jpg", "jpeg", "png"])
 
-    if uploaded_file is not None:
-        image = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), 1)
-        show_filtered_image(image)
-    else:
-        st.warning("Veuillez choisir une image à filtrer.")
+        st.title('ELA Filter Application')
+
+        uploaded_file = st.file_uploader("Choose an image...", type="jpg")
+        if uploaded_file is not None:
+            image = Image.open(uploaded_file)
+            st.image(image, caption='Uploaded Image.', use_column_width=True)
+            st.write("")
+
+            # Convertir l'image en un tableau numpy pour le traitement
+            image = np.array(image)
+            image_ela = image.copy()  # Copie de l'image pour l'appliquer sur le filtre ELA
+
+            # Convertir l'image en niveaux de gris
+            grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+            # Appliquer le filtre ELA avec le filtre de différence absolue comme noyau
+            ela = cv2.absdiff(grayscale, cv2.blur(grayscale, (5, 5)))
+
+            # Seuiller l'image ELA pour obtenir une image binaire
+            threshold_value = 10.5
+            threshold = cv2.threshold(ela, threshold_value, 255, cv2.THRESH_BINARY)[1]
+
+            # Effectuer une analyse de connectivité pour identifier les groupes de pixels connectés
+            connectivity = 8
+            output = cv2.connectedComponentsWithStats(threshold, connectivity, cv2.CV_32S)
+
+            # Récupérer les informations sur les composantes connectées
+            num_labels = output[0]
+            labels = output[1]
+            stats = output[2]
+
+            # Parcourir les composantes connectées
+            for label in range(1, num_labels):
+                # Récupérer les coordonnées du rectangle englobant
+                x, y, w, h = stats[label, cv2.CC_STAT_LEFT], stats[label, cv2.CC_STAT_TOP], stats[label, cv2.CC_STAT_WIDTH], stats[label, cv2.CC_STAT_HEIGHT]
+                # Dessiner un carré autour du groupe de pixels
+
+                if w*h > 60:
+                    cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
+                    cv2.rectangle(image_ela, (x, y), (x+w, y+h), (0, 255, 0), 2)
+
+            # Convertir les tableaux numpy en images PIL pour l'affichage
+            image = Image.fromarray(image)
+            image_ela = Image.fromarray(image_ela)
+
+            # Afficher l'image avec les carrés dessinés
+            st.image(image, caption='Image with detected regions.', use_column_width=True)
+            st.image(image_ela, caption='ELA image with detected regions.', use_column_width=True)
 elif tabs == 'Example' :
     with col5:
         st.markdown('## Problèmes typiques d\'une génération :')
