@@ -68,7 +68,7 @@ if tabs == 'Accueil':
                 x, y, w, h = stats[label, cv2.CC_STAT_LEFT], stats[label, cv2.CC_STAT_TOP], stats[label, cv2.CC_STAT_WIDTH], stats[label, cv2.CC_STAT_HEIGHT]
                 # Dessiner un carré autour du groupe de pixels
 
-                if w*h > 200:
+                if w*h > 280:
                     cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
                     cv2.rectangle(grayscale, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
