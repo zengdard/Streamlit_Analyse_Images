@@ -31,9 +31,7 @@ col5, col6 = st.columns(2)
 
 if tabs == 'Accueil':
 
-        st.title('ELA Filter Application')
-
-        uploaded_file = st.file_uploader("Choose an image...", type="jpg")
+        uploaded_file = st.file_uploader("Choose an image...", type=["jpg","png","jpeg"])
         if uploaded_file is not None:
             image = Image.open(uploaded_file)
             st.image(image, caption='Uploaded Image.', use_column_width=True)
