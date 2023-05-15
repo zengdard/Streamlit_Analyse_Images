@@ -6,25 +6,6 @@ from PIL import Image
 from st_on_hover_tabs import on_hover_tabs
 st.title("StendhalGPT Gogh")
 
-with st.sidebar:
-        tabs = on_hover_tabs(tabName=['Accueil'], 
-                            iconName=['dashboard'],
-                            styles = {'navtab': {'background-color':'#FFFFFF',
-                                                'color': '#000000',
-                                                'font-size': '18px',
-                                                'transition': '.3s',
-                                                'white-space': 'nowrap',
-                                                'text-transform': 'uppercase'},
-                                    'tabOptionsStyle': {':hover :hover': {'color': 'red',
-                                                                    'cursor': 'pointer'}},
-                                    'iconStyle':{'position':'fixed',
-                                                    'left':'7.5px',
-                                                    'text-align': 'left'},
-                                    'tabStyle' : {'list-style-type': 'none',
-                                                    'margin-bottom': '30px',
-                                                    'padding-left': '30px'}},
-                            key="1")
-# Créer une fonction pour appliquer le filtre de Sobel
 
 
 col5, col6 = st.columns(2)
