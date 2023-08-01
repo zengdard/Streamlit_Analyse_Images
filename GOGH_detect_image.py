@@ -11,8 +11,6 @@ st.title("StendhalGPT Gogh")
 col5, col6 = st.columns(2)
 
 
-st.info('Nous prévoyons d\'intégrer prochainement un modèle basé sur YOLOv5, afin d\'améliorer les capacités de détection.')
-
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg","png","jpeg"])
 if uploaded_file is not None:
         image = Image.open(uploaded_file)
