@@ -2,6 +2,8 @@
 
 This project is a Streamlit application called "StendhalGPT Gogh" that allows users to upload an image and detect regions of interest using the ELA (Error Level Analysis) method. The application uses OpenCV for image processing and Streamlit for the user interface.
 
+[picture](https://github.com/zengdard/Streamlit_Analyse_Images/blob/main/donald_trump_marche_fake.jpg?raw=true)
+
 ## Features
 
 - Allows users to upload an image in JPG, PNG, or JPEG format.
